@@ -89,7 +89,7 @@ class Usuario:
         self.cursor.execute(sql, val)
         result = self.cursor.fetchone()
 
-        if bcrypt.checkpw(self.__senha, result):
+        if bcrypt.checkpw(bcrypt.hashpw(self.__senha.encode('utf-8'), bcrypt.gensalt()), result):
             return "Senha correta!"
         else:
             return "Senha incorreta."

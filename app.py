@@ -28,3 +28,9 @@ def atualizarUsuario():
     usuario.set_email('milena.pacheco@aluno.feliz.ifrs.edu.br')
 
     return usuario.atualizar_usuario(id)
+
+@app.route('/autenticarSenha')
+def autenticarSenha():
+    usuario = Usuario('luiz.pacheco@aluno.feliz.ifrs.edu.br', '1234')
+    usuario.criarUsuario()
+    return usuario.autenticar_senha()
