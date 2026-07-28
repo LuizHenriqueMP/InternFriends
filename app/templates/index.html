@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quadro de Comentários</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">Quadro de Comentários</a>
+      <nav class="menu" aria-label="Menu principal">
+        <span id="currentUser" class="current-user" hidden></span>
+        <a id="adminButton" href="/admin" hidden>Administração</a>
+        <button id="forgotPasswordButton" type="button" class="link-button">Recuperar senha</button>
+        <button id="logoutButton" type="button" hidden>Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="authSection">
+      <h1>Acesso</h1>
+      <label for="email">E-mail</label>
+      <input id="email" type="email" autocomplete="email" placeholder="email@empresa.com.br">
+
+      <label for="password">Senha</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Senha">
+
+      <button id="registerButton" type="button">Cadastrar</button>
+      <button id="loginButton" type="button">Entrar</button>
+      <button id="resendVerificationButton" type="button" class="link-button">Reenviar verificação</button>
+      <p id="authMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section id="commentSection" hidden>
+      <h1>Novo comentário</h1>
+      <textarea id="content" maxlength="1000" placeholder="Escreva seu comentário..."></textarea>
+      <button id="publishButton" type="button">Publicar</button>
+      <p id="commentMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section id="commentsSection" hidden>
+      <div class="section-heading">
+        <h2>Comentários</h2>
+        <button id="reloadCommentsButton" type="button">Atualizar</button>
+      </div>
+      <p id="commentsMessage" class="message" aria-live="polite"></p>
+      <div id="comments"></div>
+    </section>
+
+    <section id="resetSection" hidden>
+      <h1>Redefinir senha</h1>
+      <label for="newPassword">Nova senha</label>
+      <input id="newPassword" type="password" autocomplete="new-password" placeholder="Nova senha">
+      <button id="resetPasswordButton" type="button">Alterar senha</button>
+      <p id="resetMessage" class="message" aria-live="polite"></p>
+      <p><a href="/">Voltar para o login</a></p>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

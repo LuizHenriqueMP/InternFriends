@@ -1,0 +1,36 @@
+"""add administrator flag
+
+Revision ID: 0002
+Revises: 0001
+"""
+from alembic import op
+import sqlalchemy as sa
+
+revision = "0002"
+down_revision = "0001"
+branch_labels = None
+depends_on = None
+
+
+def upgrade():
+    op.add_column(
+        "users",
+        sa.Column(
+            "is_admin",
+            sa.Boolean(),
+            nullable=False,
+            server_default=sa.false(),
+        ),
+    )
+    op.create_index(
+        op.f("ix_users_is_admin"),
+        "users",
+        ["is_admin"],
+        unique=False,
+    )
+    op.alter_column("users", "is_admin", server_default=None)
+
+
+def downgrade():
+    op.drop_index(op.f("ix_users_is_admin"), table_name="users")
+    op.drop_column("users", "is_admin")

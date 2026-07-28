@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Painel administrativo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <header class="admin-topbar">
+        <div class="admin-topbar-content">
+            <div>
+                <strong>Painel administrativo</strong>
+                <span id="admin-email"></span>
+            </div>
+            <nav>
+                <a href="/">Voltar ao quadro</a>
+                <button id="admin-logout-button" type="button">Sair</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <p id="admin-message" class="message" aria-live="polite"></p>
+
+        <section class="admin-section">
+            <div class="admin-section-header">
+                <div>
+                    <h1>Usuários</h1>
+                    <p>Libere ou bloqueie o acesso das contas cadastradas.</p>
+                </div>
+                <button id="reload-users-button" type="button">Atualizar</button>
+            </div>
+            <div id="admin-users" class="admin-list"></div>
+        </section>
+
+        <section class="admin-section">
+            <div class="admin-section-header">
+                <div>
+                    <h2>Comentários</h2>
+                    <p>Somente nesta página o e-mail do autor é exibido.</p>
+                </div>
+                <button id="reload-admin-comments-button" type="button">Atualizar</button>
+            </div>
+            <div id="admin-comments" class="admin-list"></div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+</body>
+</html>
