@@ -24,6 +24,7 @@ def deletarUsuario():
 @app.route('/atualizarUsuario')
 def atualizarUsuario():
     usuario = Usuario('milena.jung@aluno.feliz.ifrs.edu.br', '1234')
+    id = usuario.achar_id()[0]
     usuario.set_email('milena.pacheco@aluno.feliz.ifrs.edu.br')
 
-    return usuario.atualizar_usuario()
+    return usuario.atualizar_usuario(id)

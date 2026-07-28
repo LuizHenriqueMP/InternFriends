@@ -74,10 +74,9 @@ class Usuario:
         self.db.commit()
         return 'Usuário excluído.'
 
-    def atualizar_usuario(self):
+    def atualizar_usuario(self, id):
         sql = 'UPDATE usuarios SET email = %s, senha = %s WHERE id = %s'
-        self.set_id = self.achar_id()
-        val = (self.__email, bcrypt.hashpw(self.__senha.encode('utf-8'), bcrypt.gensalt()), self.__id)
+        val = (self.__email, bcrypt.hashpw(self.__senha.encode('utf-8'), bcrypt.gensalt()), id)
         self.cursor.execute(sql, val)
 
         self.db.commit()
