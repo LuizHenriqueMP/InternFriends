@@ -8,6 +8,10 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 @app.route('/criarUsuario')
-def criarUsuario():
-    usuario = Usuario('milena.jung@aluno.feliz.ifrs.edu.br', '26180915')
+def criarUsuario(email, senha):
+    usuario = Usuario(email, senha)
     return usuario.criarUsuario()
+
+@app.route('/acharUsuario')
+def acharUsuario():
+    return Usuario.achar_usuario_por_id(Usuario, 2)
