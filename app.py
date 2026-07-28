@@ -15,3 +15,7 @@ def criarUsuario(email, senha):
 @app.route('/acharUsuario')
 def acharUsuario():
     return Usuario.achar_usuario_por_id(Usuario, 2)
+
+@app.route('/deletarUsuario')
+def deletarUsuario():
+    return Usuario.deletar_usuario(Usuario, 2)

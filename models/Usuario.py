@@ -59,6 +59,7 @@ class Usuario:
         self.db.commit()
         return 'Usuário criado!'
 
+    @staticmethod
     def deletar_usuario(self, id):
         sql = 'DELETE FROM usuarios WHERE id = %s'
         val = (id,)
