@@ -49,7 +49,13 @@ class Usuario:
         val = (id,)
         self.cursor.execute(sql, val)
 
-        return self.cursor.fetchall()
+        resultado = self.cursor.fetchall()[0]
+        email = resultado[1]
+        senha = resultado[2]
+
+        usuario = Usuario(email, senha)
+        return usuario
+        
 
     def criarUsuario(self):
         sql = 'INSERT INTO usuarios (email, senha) VALUES (%s, %s)'
@@ -66,7 +72,16 @@ class Usuario:
         self.cursor.execute(sql, val)
 
         self.db.commit()
-        return 'Usuário excluído'
+        return 'Usuário excluído.'
+
+    def atualizar_usuario(self):
+        sql = 'UPDATE usuarios SET email = %s, senha = %s WHERE id = %s'
+        self.set_id = self.achar_id()
+        val = (self.__email, bcrypt.hashpw(self.__senha.encode('utf-8'), bcrypt.gensalt()), self.__id)
+        self.cursor.execute(sql, val)
+
+        self.db.commit()
+        return 'Dados atualizados.'
     
     def autenticar_senha(self):
         sql = 'SELECT senha FROM usuarios WHERE id = %s'
