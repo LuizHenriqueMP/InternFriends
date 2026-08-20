@@ -59,8 +59,15 @@ def register():
     except IntegrityError:
         db.session.rollback()
         return jsonify(message="Já existe uma conta com esse e-mail."), 409
-    _send_verification(user)
-    return jsonify(message="Conta criada. Verifique seu e-mail."), 201
+    if current_app.config["EMAIL_VERIFICATION_REQUIRED"]:
+        _send_verification(user)
+        message = "Conta criada. Verifique seu e-mail."
+    else:
+        user.status = "active"
+        user.email_verified_at = datetime.now(timezone.utc)
+        db.session.commit()
+        message = "Conta criada com sucesso."
+    return jsonify(message=message), 201
 
 
 @auth_bp.get("/verify-email")
@@ -83,7 +90,7 @@ def verify_email():
 def resend_verification():
     email = normalize_email((request.get_json(silent=True) or {}).get("email", ""))
     user = User.query.filter_by(email=email, status="pending_verification").first()
-    if user:
+    if user and current_app.config["EMAIL_VERIFICATION_REQUIRED"]:
         _send_verification(user)
     return jsonify(message="Caso a conta esteja pendente, enviaremos um novo link.")
 
@@ -96,6 +103,10 @@ def login():
     user = User.query.filter_by(email=email).first()
     if not user or not user.check_password(payload.get("password", "")):
         return jsonify(message="E-mail ou senha inválidos."), 401
+    if user.status == "pending_verification" and not current_app.config["EMAIL_VERIFICATION_REQUIRED"]:
+        user.status = "active"
+        user.email_verified_at = datetime.now(timezone.utc)
+        db.session.commit()
     if not user.is_active:
         return jsonify(message="A conta ainda não está ativa."), 403
     return jsonify(access_token=create_access_token(identity=str(user.id)))

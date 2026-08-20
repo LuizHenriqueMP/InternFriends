@@ -18,6 +18,9 @@ class Config:
         if item.strip()
     }
     APP_BASE_URL = os.getenv("APP_BASE_URL", "http://127.0.0.1:5000").rstrip("/")
+    EMAIL_VERIFICATION_REQUIRED = os.getenv(
+        "EMAIL_VERIFICATION_REQUIRED", "false"
+    ).strip().lower() in {"1", "true", "yes", "on"}
     MAIL_BACKEND = os.getenv("MAIL_BACKEND", "console").lower()
     MAIL_FROM = os.getenv("MAIL_FROM", "no-reply@example.com")
     AWS_REGION = os.getenv("AWS_REGION", "us-east-1")

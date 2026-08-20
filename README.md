@@ -1,6 +1,6 @@
 # Quadro de Comentários Anônimos
 
-MVP em Flask com API REST, MySQL, JWT, verificação de e-mail, recuperação de senha, um comentário por dia, curtidas/descurtidas e exclusão lógica.
+MVP em Flask com API REST, MySQL, JWT, recuperação de senha, um comentário por dia, curtidas/descurtidas e exclusão lógica. A confirmação de e-mail é opcional.
 
 ## Requisitos
 
@@ -33,10 +33,11 @@ flask --app run.py db upgrade
 
 ## E-mail local
 
-Com `MAIL_BACKEND=console`, os links de verificação e recuperação aparecem no terminal do Flask. Para usar Amazon SES:
+Por padrão, a aplicação não exige confirmação de e-mail e não usa o Amazon SES para ativar contas. Para exigir confirmação, defina `EMAIL_VERIFICATION_REQUIRED=true`. Com `MAIL_BACKEND=console`, os links de verificação e recuperação aparecem no terminal do Flask. Para usar Amazon SES:
 
 ```env
 MAIL_BACKEND=ses
+EMAIL_VERIFICATION_REQUIRED=true
 MAIL_FROM=no-reply@seudominio.com
 AWS_REGION=us-east-1
 AWS_ACCESS_KEY_ID=...
@@ -48,7 +49,7 @@ O remetente precisa estar autorizado no SES. Em sandbox, os destinatários tamb�
 ## Fluxo de teste
 
 1. Cadastre um e-mail pertencente a `ALLOWED_EMAIL_DOMAINS`.
-2. Copie do terminal o link `/api/auth/verify-email?token=...` e abra no navegador.
+2. Se `EMAIL_VERIFICATION_REQUIRED=true`, copie do terminal o link `/api/auth/verify-email?token=...` e abra no navegador.
 3. Faça login.
 4. Publique um comentário.
 5. Curta ou descurta comentários.
